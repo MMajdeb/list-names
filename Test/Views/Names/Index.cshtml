@@ -56,12 +56,13 @@
 <p>
     <a asp-action="Create" class="btn btn-success" style="float:right">Ajouter</a>
 </p>
+
 @section Scripts {
     <script>
         $('#filterListNames').click(function (e) {
 
-           var $valMin = parseInt($('#IdMin').val());
-            var $valMax = parseInt($('#IdMax').val());
+            var $valMin = parseInt($('#IdMin').val()) || 0;
+            var $valMax = parseInt($('#IdMax').val()) || 0;
 
             if ( $valMin > $valMax) {
                 alert("Verifier IdMin et IdMax");

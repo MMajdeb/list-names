@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
 using Test.Models;
 
 namespace Test.Controllers
 {
     public class NamesController : Controller
     {
-        private List<Names> listName;/* = new List<Names>
-        {
-            new Names{Id=1,Name="Mohamed" },
-            new Names{Id=2,Name="Zakaria" },
-        };*/
+        private List<Names> listName;
         private IMemoryCache _cache;
         private readonly string _cashKey;
 
@@ -66,9 +59,10 @@ namespace Test.Controllers
             {
                 listName = new List<Names>();
             }
+            
             var listNameFiltred = listName.Where(x => x.Id >= IdMin && x.Id <= IdMax || (IdMin == 0 && IdMax == 0)).ToList();
 
-            return PartialView("FilteredList", listNameFiltred);
+            return PartialView("_FilteredList", listNameFiltred);
         }
     }
 }
