@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Test.Models.Names>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List de Noms</h1>
+
+
+
+<div class="form-row" style="margin-bottom:2em">
+    <div class="col">
+        <input type="number" id="IdMin" placeholder="Id min" class="form-control" />
+    </div>
+    <div class="col">
+        <input type="number" id="IdMax" placeholder="Id max" class="form-control" />
+    </div>
+    <div class="col">
+        <button class="btn btn-primary" id="filterListNames">Filtrer</button>
+    </div>
+</div>
+
+<table class="table" id="ListNames">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                @*out of demand*@
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+
+    </tbody>
+</table>
+<p>
+    <a asp-action="Create" class="btn btn-success" style="float:right">Ajouter</a>
+</p>
+@section Scripts {
+    <script>
+        $('#filterListNames').click(function (e) {
+
+            $valMin = $('#IdMin').val();
+            $valMax = $('#IdMax').val();
+
+            if ( $valMin=== '' || $valMax=='' || $valMin>$valMax) {
+                alert("Verifier IdMin et IdMax");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Filter", "Names")',
+                data: {
+                    IdMin: $valMin,
+                    IdMax: $valMax,
+                },
+                dataType: "html",
+                success: function (data) {
+                    console.log(data);
+                     $("#ListNames").html(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                                         $("#ListNames").html(err);
+                }
+            });
+        });
+    </script>
+}
