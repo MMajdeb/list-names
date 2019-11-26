@@ -60,10 +60,10 @@
     <script>
         $('#filterListNames').click(function (e) {
 
-            $valMin = $('#IdMin').val();
-            $valMax = $('#IdMax').val();
+           var $valMin = parseInt($('#IdMin').val());
+            var $valMax = parseInt($('#IdMax').val());
 
-            if ( $valMin=== '' || $valMax=='' || $valMin>$valMax) {
+            if ( $valMin > $valMax) {
                 alert("Verifier IdMin et IdMax");
                 return;
             }
@@ -77,12 +77,11 @@
                 },
                 dataType: "html",
                 success: function (data) {
-                    console.log(data);
                      $("#ListNames").html(data);
                 },
                 error: function (err) {
-                    console.log(err);
-                                         $("#ListNames").html(err);
+                    console.error(err);
+                    alert("Une erreur se produit");
                 }
             });
         });

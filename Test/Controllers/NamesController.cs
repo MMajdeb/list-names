@@ -66,7 +66,7 @@ namespace Test.Controllers
             {
                 listName = new List<Names>();
             }
-            var listNameFiltred = listName.Where(x => x.Id >= IdMin && x.Id <= IdMax).ToList();
+            var listNameFiltred = listName.Where(x => x.Id >= IdMin && x.Id <= IdMax || (IdMin == 0 && IdMax == 0)).ToList();
 
             return PartialView("FilteredList", listNameFiltred);
         }
